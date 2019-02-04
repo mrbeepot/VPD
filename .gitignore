@@ -116,5 +116,5 @@ dmypy.json
 .pyre/
 
 .idea/
-frames/
-videos/
+.git/
+dataset/
