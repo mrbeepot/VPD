@@ -14,7 +14,7 @@ def test_pickling():
     key_points = lf.extract_sift_key_points(image=frames[20])
     descriptors = lf.extract_sift_descriptors(image=frames[20])
 
-    p = pickle.dumps(descriptors)
+    p = pickle.dumps(key_points)
     print(len(p))
 
     d_new = pickle.loads(p)

@@ -18,6 +18,7 @@ def __build_frame_list(video_capture, fps, width, height):
                 gray = __convert_to_grayscale(resized)
                 frames.append(gray)
             count += 1
+            print("new frame captured")
         else:
             break
     return frames
