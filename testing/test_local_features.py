@@ -6,10 +6,10 @@ import numpy
 def test_sift_extract():
     video_source_file_path = "../dataset/videos/200_512kb.mp4"
     test_frames_file_path = "frames/"
-    fps = 30
+    fps = 2
     width = 480
     height = 360
-    frames = pp.get_frames(video_file_source_path=video_source_file_path, fps=fps, width=width, height=height)
+    frames = pp.get_frames(video_file_source_path=video_source_file_path, req_fps=fps, width=width, height=height)
     c = 0
     for f in frames:
         key_points = lf.extract_sift_key_points(image=f)

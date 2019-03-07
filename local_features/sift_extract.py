@@ -28,3 +28,9 @@ def extract_sift_descriptors(image):
     sift = cv2.xfeatures2d.SIFT_create()
     k, d = sift.detectAndCompute(image, None)
     return d
+
+
+def extract_sift_keypoints_and_descriptors(image, limit):
+    sift = cv2.xfeatures2d.SIFT_create(limit)
+    k, d = sift.detectAndCompute(image, None)
+    return k, d

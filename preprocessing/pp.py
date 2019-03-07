@@ -1,3 +1,6 @@
+import numpy as np
+import sys
+import os.path
 import cv2
 
 
@@ -6,16 +9,44 @@ def __get_video_stream(video_file_source_path=None):
     return video_capture
 
 
-def __build_frame_list(video_capture, fps, width, height):
+def getFrame(video_capture, sec):
+    video_capture.set(cv2.CAP_PROP_POS_MSEC,sec*1000)
+    success, image = video_capture.read()
+    if success:
+        cv2.imwrite("outputs/frame "+str(sec)+" sec.jpg", image)     # save frame as JPG file
+    return success, image
+
+
+def __build_frame_list(video_capture, req_fps, width, height):
+    sec = 0
     frames = []
+
+    # frame_rate = 0.5  # it will capture image in each second
+    # success, image = getFrame(video_capture, sec)
+    # while success:
+    #     sec = sec + frame_rate
+    #     sec = round(sec, 2)
+    #     success, image = getFrame(video_capture, sec)
+    #     if(success):
+    #         image = image.astype('uint8')
+    #         resized = __resize_frame(image=image, width=width, height=height, inter=cv2.INTER_AREA)
+    #         gray = __convert_to_grayscale(resized)
+    #         frames.append(gray)
+    #         print("new frame captured")
+    # print(len(frames))
+    # return frames
+
     count = 0
-    convert = int(fps / 2)
+    fps = round(video_capture.get(cv2.CAP_PROP_FPS), 0)
+    convert = int(fps / req_fps)
+    print(fps)
     while video_capture.isOpened():
         success, image = video_capture.read()
         if success is True and image is not None:
             if count % convert == 0:
                 resized = __resize_frame(image=image, width=width, height=height, inter=cv2.INTER_AREA)
                 gray = __convert_to_grayscale(resized)
+                # cv2.imwrite("outputs/frame " + str(count) + " sec.jpg", image)  # save frame as JPG file
                 frames.append(gray)
             count += 1
             print("new frame captured")
@@ -44,8 +75,8 @@ def __convert_to_grayscale(image):
     return gray
 
 
-def get_frames(video_file_source_path=None, fps=None, width=None, height=None):
+def get_frames(video_file_source_path=None, req_fps=None, width=None, height=None):
     video_capture = __get_video_stream(video_file_source_path=video_file_source_path)
-    frames = __build_frame_list(video_capture=video_capture, fps=fps, width=width, height=height)
+    frames = __build_frame_list(video_capture=video_capture, req_fps=req_fps, width=width, height=height)
     return frames
 
