@@ -39,7 +39,7 @@ def __build_frame_list(video_capture, req_fps, width, height):
     count = 0
     fps = round(video_capture.get(cv2.CAP_PROP_FPS), 0)
     convert = int(fps / req_fps)
-    print(fps)
+    print('fps of video: '+ str(fps))
     while video_capture.isOpened():
         success, image = video_capture.read()
         if success is True and image is not None:
@@ -49,7 +49,7 @@ def __build_frame_list(video_capture, req_fps, width, height):
                 # cv2.imwrite("outputs/frame " + str(count) + " sec.jpg", image)  # save frame as JPG file
                 frames.append(gray)
             count += 1
-            print("new frame captured")
+            # print("new frame captured")
         else:
             break
     return frames

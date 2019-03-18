@@ -33,7 +33,7 @@ def generate_pickle_list(video_name, frames):
         k, d = lf.extract_sift_keypoints_and_descriptors(image=f, limit=500)
         temp = pickle_keypoints(k, d)
         temp_array.append(temp)
-        print('new frame added to list')
+        # print('new frame added to list')
     print(len(temp_array))
     pickle.dump(temp_array, open("../picklefiles/video_"+str(video_name)+".p", "wb"))
     print('pickle file created')
