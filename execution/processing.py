@@ -6,7 +6,7 @@ import pickle_helper as ph
 from pathlib import Path
 
 
-def main(video_source_directory_path=None, count=8, fps=2, width=480, height=360):
+def main(video_source_directory_path=None, count, fps, width, height):
 	path_list = Path(video_source_directory_path).glob("**/*.mp4")
 	current_count = 0
 	print("Generating pickle files according to the given config...")
