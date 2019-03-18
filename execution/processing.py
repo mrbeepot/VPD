@@ -1,22 +1,33 @@
+import sys
+sys.path.append("../")
 import preprocessing as pp
 import time
-import sys
 import pickle_helper as ph
+from pathlib import Path
 
-def main():
-        print()
-        for i in range(int(sys.argv[1]), int(sys.argv[2])):
-                video_source_file_path = "../dataset/videos/"+str(i)+".mp4"
-                fps=2
-                width = 480
-                height = 360
-                start = time.time()
 
-                frames = pp.get_frames(video_file_source_path=video_source_file_path, req_fps=fps, width=width, height=height)
-                end = time.time()
-                print(end - start)
-                ph.generate_pickle_list(video_name=i,frames=frames)
-                end = time.time()
-                print(end-start)
+def main(video_source_directory_path=None, count=8, fps=2, width=480, height=360):
+	path_list = Path(video_source_directory_path).glob("**/*.mp4")
+	current_count = 0
+	print("Generating pickle files according to the given config...")
+	for path in path_list:
+		if current_count >= 8:
+			break
+		else:
+			print("\n\n\nCOUNT: " + str(current_count), end="\n\n\n")
+			video_source_file_name = str(path.stem) + ".mp4"
+			print("Processing video file: " + video_source_file_name)
+			print("Preprocessing...")
+			start = time.time()
+			frames = pp.get_frames(video_file_source_path=str(path), req_fps=fps, width=width,height=height)
+			mid = time.time()
+			print("Time required for preprocessing is: " + str(mid - start))
+			print("Generating pickle dump...");
+			ph.generate_pickle_list(video_name=str(path.stem), frames=frames)
+			end = time.time()
+			print("Time required for generating pickle file is: " + str(end - mid) )
+			print("Total time required for saving a video is: " + str(end-start))
+		current_count += 1
 
-main()
+
+main(video_source_directory_path="../dataset/videos/", count=5, fps=2, width=480, height=360)
