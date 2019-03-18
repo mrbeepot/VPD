@@ -6,12 +6,12 @@ import pickle_helper as ph
 from pathlib import Path
 
 
-def main(video_source_directory_path=None, count, fps, width, height):
+def main(video_source_directory_path, count, fps, width, height):
 	path_list = Path(video_source_directory_path).glob("**/*.mp4")
 	current_count = 0
 	print("Generating pickle files according to the given config...")
 	for path in path_list:
-		if current_count >= 8:
+		if current_count >= count:
 			break
 		else:
 			print("\n\n\nCOUNT: " + str(current_count), end="\n\n\n")
@@ -30,4 +30,4 @@ def main(video_source_directory_path=None, count, fps, width, height):
 		current_count += 1
 
 
-main(video_source_directory_path="../dataset/videos/", count=5, fps=2, width=480, height=360)
+main(video_source_directory_path="../dataset/videos/", count=1, fps=2, width=480, height=360)
