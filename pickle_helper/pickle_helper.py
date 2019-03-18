@@ -1,5 +1,4 @@
 import cv2
-import sys
 import numpy as np
 import pickle
 import local_features as lf
@@ -29,11 +28,21 @@ def unpickle_keypoints(array):
 
 def generate_pickle_list(video_name, frames):
     temp_array = []
+    count = 0
     for f in frames:
         k, d = lf.extract_sift_keypoints_and_descriptors(image=f, limit=500)
         temp = pickle_keypoints(k, d)
         temp_array.append(temp)
-        # print('new frame added to list')
-    print(len(temp_array))
-    pickle.dump(temp_array, open("../picklefiles/video_"+str(video_name)+".p", "wb"))
-    print('pickle file created')
+# <<<<<<< HEAD
+#         # print('new frame added to list')
+#     print(len(temp_array))
+#     pickle.dump(temp_array, open("../picklefiles/video_"+str(video_name)+".p", "wb"))
+#     print('pickle file created')
+# =======
+        count += 1
+        print("\r", end="")
+        print('Frames added to buffer for creating pickle file: ' + str(count), end="")
+    with open("../picklefiles/video_"+str(video_name)+".p", "wb") as f:
+        pickle.dump(temp_array, f)
+        print('\nPickle file created')
+# >>>>>>> 40e08ba0eb738aa60c18a2c2ecb9bad99d78b793

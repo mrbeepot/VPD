@@ -39,12 +39,12 @@ def estimate_size_of_video_file(url):
 
 
 def main():
-    with open("trecvid_2012.xml", "r") as dataset_xml_file:
+    with open("../dataset/trecvid_2012.xml", "r") as dataset_xml_file:
         soup = BS(dataset_xml_file, "lxml")
         ids = soup.find_all("id")
         file_names = soup.find_all("filename")
         urls = soup.find_all("source")
-        base_dir = "videos/"
+        base_dir = "../dataset/videos/"
         download_helper(ids=ids, file_names=file_names, urls=urls, base_dir=base_dir)
 
 

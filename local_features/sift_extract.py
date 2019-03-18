@@ -1,7 +1,4 @@
 import cv2
-from config import Config
-import csv
-import numpy as np
 
 
 # def extract_sift_features(image, count):
@@ -34,3 +31,4 @@ def extract_sift_keypoints_and_descriptors(image, limit):
     sift = cv2.xfeatures2d.SIFT_create(limit)
     k, d = sift.detectAndCompute(image, None)
     return k, d
+

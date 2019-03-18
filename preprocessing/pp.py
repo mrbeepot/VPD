@@ -37,6 +37,7 @@ def __build_frame_list(video_capture, req_fps, width, height):
     # return frames
 
     count = 0
+    frame_count = 0
     fps = round(video_capture.get(cv2.CAP_PROP_FPS), 0)
     convert = int(fps / req_fps)
     print('fps of video: '+ str(fps))
@@ -48,10 +49,14 @@ def __build_frame_list(video_capture, req_fps, width, height):
                 gray = __convert_to_grayscale(resized)
                 # cv2.imwrite("outputs/frame " + str(count) + " sec.jpg", image)  # save frame as JPG file
                 frames.append(gray)
+                frame_count += 1
+                print("\r",end="")
+
             count += 1
             # print("new frame captured")
         else:
             break
+    print("Frame(s) captured: " + str(frame_count), end="")
     return frames
 
 
@@ -77,6 +82,8 @@ def __convert_to_grayscale(image):
 
 def get_frames(video_file_source_path=None, req_fps=None, width=None, height=None):
     video_capture = __get_video_stream(video_file_source_path=video_file_source_path)
+    print("Retrieving and preprocessing frames...")
     frames = __build_frame_list(video_capture=video_capture, req_fps=req_fps, width=width, height=height)
+    print("\nCaptured all frames")
     return frames
 
