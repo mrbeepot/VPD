@@ -1,5 +1,5 @@
 import cv2
-
+import config
 
 # def extract_sift_features(image, count):
 #     sift = cv2.xfeatures2d.SIFT_create()
@@ -15,19 +15,22 @@ import cv2
 #         file.close()
 
 
-def extract_sift_key_points(image):
+def extract_sift_key_points(image=None):
+    assert image is not None, "Please provide an image object."
     sift = cv2.xfeatures2d.SIFT_create()
     key_points = sift.detect(image=image)
     return key_points
 
 
-def extract_sift_descriptors(image):
+def extract_sift_descriptors(image=None):
+    assert image is not None, "Please provide an image object."
     sift = cv2.xfeatures2d.SIFT_create()
     k, d = sift.detectAndCompute(image, None)
     return d
 
 
-def extract_sift_keypoints_and_descriptors(image, limit):
+def extract_sift_keypoints_and_descriptors(image=None, limit=config.LOCAL_FEATURES_IN_A_FRAME_LIMIT):
+    assert image is not None, "Please provide an image object."
     sift = cv2.xfeatures2d.SIFT_create(limit)
     k, d = sift.detectAndCompute(image, None)
     return k, d

@@ -2,9 +2,12 @@ import cv2
 import numpy as np
 import pickle
 import local_features as lf
+import config
 
 
-def pickle_keypoints(keypoints, descriptors):
+def pickle_keypoints(keypoints=None, descriptors=None):
+    # assert keypoints is not None, "Please provide keyoints."
+    # assert descriptors is not None, "Please provide descriptors."
     i = 0
     temp_array = []
     for point in keypoints:
@@ -26,11 +29,17 @@ def unpickle_keypoints(array):
     return keypoints, np.array(descriptors)
 
 
-def generate_pickle_list(video_name, frames):
+def generate_pickle_list(video_name=None, frames=None, limit=config.LOCAL_FEATURES_IN_A_FRAME_LIMIT):
+    assert video_name is not None, "Please provide name and extension of video file."
+    assert frames is not None, "Please provide frames to process."
+    assert len(frames) > 0, "Frame list is empty"
     temp_array = []
     count = 0
+    video_name_without_ext = video_name.split(".")[0]
+    assert video_name_without_ext is not "" or None, "Error fetching the video name."
     for f in frames:
-        k, d = lf.extract_sift_keypoints_and_descriptors(image=f, limit=500)
+        assert f is not None, "None type frame detected."
+        k, d = lf.extract_sift_keypoints_and_descriptors(image=f, limit=limit)
         temp = pickle_keypoints(k, d)
         temp_array.append(temp)
 # <<<<<<< HEAD
@@ -40,9 +49,15 @@ def generate_pickle_list(video_name, frames):
 #     print('pickle file created')
 # =======
         count += 1
+<<<<<<< HEAD
         print("\r", end="")
         print('Frames added to buffer for creating pickle file: ' + str(count), end="")
     with open("../picklefiles/video_"+str(video_name)+".p", "wb") as f:
+=======
+        print("\r",end="")
+        print('Frames added to buffer for creating pickle file: ' + str(count), end="\r")
+    with open(config.PICKLE_FILES_DIR + str(video_name)+".p", "wb") as f:
+>>>>>>> master
         pickle.dump(temp_array, f)
         print('\nPickle file created')
 # >>>>>>> 40e08ba0eb738aa60c18a2c2ecb9bad99d78b793
