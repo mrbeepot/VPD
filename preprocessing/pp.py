@@ -9,7 +9,7 @@ def __get_video_stream(video_path=None):
     return video_capture
 
 
-def __build_frame_list(video_capture=None,fps=config.FPS, width=config.WIDTH, height=config.HEIGHT):
+def __build_frame_list(video_capture=None,fps=config.FPS, width=config.WIDTH, height=config.HEIGHT, video_name=None):
     assert type(video_capture) is cv2.VideoCapture, "Incorrect object passed for video_capture"
     assert video_capture is not None, "Please provide a video_capture object (cv2.VideoCapture) with a video stream" 
     
@@ -17,16 +17,10 @@ def __build_frame_list(video_capture=None,fps=config.FPS, width=config.WIDTH, he
     frames = []
     count = 0
     frame_count = 0
-<<<<<<< HEAD
-    fps = round(video_capture.get(cv2.CAP_PROP_FPS), 0)
-    convert = int(fps / req_fps)
-    print('fps of video: '+ str(fps))
-=======
     
     default_fps = round(video_capture.get(cv2.CAP_PROP_FPS), 0)
     convert = int(default_fps / fps)
     
->>>>>>> master
     while video_capture.isOpened():
         success, image = video_capture.read()
         
@@ -34,22 +28,17 @@ def __build_frame_list(video_capture=None,fps=config.FPS, width=config.WIDTH, he
             if count % convert == 0:
                 resized = __resize_frame(image=image, width=width, height=height, inter=cv2.INTER_AREA)
                 gray = __convert_to_grayscale(image=resized)
-                
+                # print(config.DEMO_FRAMES_DIR + video_name + str(frame_count) + ".png")
+                cv2.imwrite(config.DEMO_FRAMES_DIR + video_name + str(frame_count) + ".png", resized)
                 frames.append(gray)
                 
                 frame_count += 1
-<<<<<<< HEAD
-                print("\r",end="")
-
-=======
                 print("\r", end="")
                 print("Frame(s) captured: " + str(frame_count), end="")
->>>>>>> master
             count += 1
             # print("new frame captured")
         else:
             break
-    print("Frame(s) captured: " + str(frame_count), end="")
     return frames
 
 
@@ -84,9 +73,8 @@ def get_frames(video_path=None, fps=config.FPS, width=config.WIDTH, height=confi
     assert Path(video_path).suffix in config.SUPPORTED_FILE_EXTENSIONS, ("File extension not supported")
 
     video_capture = __get_video_stream(video_path=video_path)
-    
     print("Retrieving and preprocessing frames...")
-    frames = __build_frame_list(video_capture=video_capture, fps=fps, width=width, height=height)
+    frames = __build_frame_list(video_capture=video_capture, fps=fps, width=width, height=height, video_name=Path(video_path).stem)
     
     print("\nCaptured all frames")
     

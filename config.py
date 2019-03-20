@@ -23,3 +23,9 @@ SUPPORTED_FILE_EXTENSIONS = (
 )
 
 LOCAL_FEATURES_IN_A_FRAME_LIMIT = 100
+
+DEMO_FRAMES_DIR = ROOT_DIR + "/dataset/demo_frames/"
+
+DEMO_PICKLE_FILES_DIR = "/picklefiles/demo/"
+
+DEMO_FRAMES_DIR = ROOT_DIR + "/dataset/demo_frames/"

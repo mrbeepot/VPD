@@ -35,9 +35,6 @@ def build_database_using_directory(video_directory=config.VIDEO_DATASET_DIR, cou
 		current_count += 1
 
 
-<<<<<<< HEAD
-main(video_source_directory_path="../dataset/videos/", count=13, fps=6, width=480, height=360)
-=======
 def build_database_using_single_video(video_directory=config.VIDEO_DATASET_DIR, video_name=None, fps=config.FPS, width=config.WIDTH, height=config.HEIGHT):
 	assert video_name is not None, "Please provide a video name and extension."
 	print("Generating pickle files according to the given config...")
@@ -62,4 +59,3 @@ def build_database_using_single_video(video_directory=config.VIDEO_DATASET_DIR, 
 
 # build_database_using_directory(video_directory="../dataset/good_videos/", count=500, fps=2, width=480, height=360)
 # build_database_using_single_video(video_directory="../dataset/good_videos/3girlsbaptism3_512kb.mp4", fps=2, width=480, height=360)
->>>>>>> master
