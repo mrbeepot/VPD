@@ -30,4 +30,4 @@ def main(video_source_directory_path, count, fps, width, height):
 		current_count += 1
 
 
-main(video_source_directory_path="../dataset/videos/", count=13, fps=6, width=480, height=360)
+main(video_source_directory_path="../dataset/videos/", count=19, fps=6, width=480, height=360)
